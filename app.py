@@ -1,25 +1,34 @@
 import socket
 import time
-from flask import Flask, request, make_response
+import random
+import string
+from flask import Flask, request, make_response, session
 
 app = Flask(__name__)
+app.secret_key = "example_secret_key"
 
 @app.route("/")
 def home():
     wait = request.args.get("wait", default=-1, type=int)
     sticky = request.args.get("sticky", default=-1, type=int)
 
-    output = f"Hostname: {socket.gethostname()}<br/>"
+    output = f"Hostname: {socket.gethostname()}<br/>" 
     for k, v in request.headers:
         output += f"{k}: {v}<br/>"
+
+    if "my_session" in session:
+        output += f"Session: {session['my_session']} <br/>"
+    else:
+        session['my_session'] = ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
+
     resp = make_response(output)
+
+    if sticky > 0:
+        resp.set_cookie("sticky", session['my_session'], max_age=sticky)
 
     if wait > 0:
         ms = wait / 1000
         time.sleep(ms)
-    
-    if sticky > 0:
-        resp.set_cookie("sticky", "any_value", max_age=sticky)
     
     return resp
 
