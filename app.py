@@ -23,9 +23,6 @@ def home():
 
     resp = make_response(output)
 
-    if sticky > 0:
-        resp.set_cookie("sticky", session['my_session'], max_age=sticky)
-
     if wait > 0:
         ms = wait / 1000
         time.sleep(ms)
