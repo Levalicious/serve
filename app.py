@@ -7,6 +7,10 @@ from flask import Flask, request, make_response, session
 app = Flask(__name__)
 app.secret_key = "example_secret_key"
 
+@app.route("/health")
+def health():
+    return ""
+
 @app.route("/")
 def home():
     wait = request.args.get("wait", default=-1, type=int)
