@@ -2,6 +2,7 @@ import socket
 import time
 import random
 import string
+import os
 from flask import Flask, request, make_response, session
 
 app = Flask(__name__)
@@ -17,6 +18,9 @@ def home():
     sticky = request.args.get("sticky", default=-1, type=int)
 
     output = f"Hostname: {socket.gethostname()}<br/>" 
+    nodeName = os.environ.get("NODE_NAME", None)
+    if nodeName:
+        output += f"Nodename: {nodeName}<br/>"
     for k, v in request.headers:
         output += f"{k}: {v}<br/>"
 
