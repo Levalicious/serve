@@ -12,30 +12,13 @@ app.secret_key = "example_secret_key"
 def health():
     return ""
 
-@app.route("/")
+@app.route('/.well-known/acme-challenge/2PPZNvDNekU2sqSkRGc7tZ5ZQpowwF3BNi25IVBT_U4', methods=['GET', 'POST'])
 def home():
-    wait = request.args.get("wait", default=-1, type=int)
-    sticky = request.args.get("sticky", default=-1, type=int)
+    return "2PPZNvDNekU2sqSkRGc7tZ5ZQpowwF3BNi25IVBT_U4.hTgoQkTb4svVt86kXP6zXU12ay5UaOwxreP2lScXWbw"
 
-    output = f"Hostname: {socket.gethostname()}<br/>" 
-    nodeName = os.environ.get("NODE_NAME", None)
-    if nodeName:
-        output += f"Nodename: {nodeName}<br/>"
-    for k, v in request.headers:
-        output += f"{k}: {v}<br/>"
-
-    if "my_session" in session:
-        output += f"Session: {session['my_session']} <br/>"
-    else:
-        session['my_session'] = ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
-
-    resp = make_response(output)
-
-    if wait > 0:
-        ms = wait / 1000
-        time.sleep(ms)
-    
-    return resp
+@app.route('/', methods=['GET', 'POST'])
+def home():
+    return flask.render_template('index.html')
 
 if __name__ == "__main__":
     from waitress import serve
