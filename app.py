@@ -13,7 +13,7 @@ def health():
     return ""
 
 @app.route('/.well-known/acme-challenge/2PPZNvDNekU2sqSkRGc7tZ5ZQpowwF3BNi25IVBT_U4', methods=['GET', 'POST'])
-def home():
+def acme():
     return "2PPZNvDNekU2sqSkRGc7tZ5ZQpowwF3BNi25IVBT_U4.hTgoQkTb4svVt86kXP6zXU12ay5UaOwxreP2lScXWbw"
 
 @app.route('/', methods=['GET', 'POST'])
