@@ -11,11 +11,7 @@ app.secret_key = "example_secret_key"
 @app.route("/health")
 def health():
     return ""
-
-@app.route('/.well-known/acme-challenge/2PPZNvDNekU2sqSkRGc7tZ5ZQpowwF3BNi25IVBT_U4', methods=['GET', 'POST'])
-def acme():
-    return "2PPZNvDNekU2sqSkRGc7tZ5ZQpowwF3BNi25IVBT_U4.hTgoQkTb4svVt86kXP6zXU12ay5UaOwxreP2lScXWbw"
-
+    
 @app.route('/', methods=['GET', 'POST'])
 def home():
     return render_template('index.html')
